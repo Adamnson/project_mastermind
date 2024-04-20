@@ -17,14 +17,14 @@ COLORS = { 0=>'red', 1=>'yellow', 2=>'green', 3=>'blue', 4=>'orange', 5=>'black'
 MAX_TRY = 10
 
 class Mastermind 
-    attr_reader :code
+    attr_accessor :code
 
-    def initialize()
-        @code = []
-        4.times do
-            @code.append((rand()*5.9).to_i)
-        end
-    end
+    # def initialize()
+    #     @code = []
+    #     4.times do
+    #         @code.append((rand()*5.9).to_i)
+    #     end
+    # end
 
     def valid_guess?(g)
         if contains_valid_color?(g) and correct_length?(g)
@@ -55,16 +55,18 @@ class Mastermind
     def evaluate_guess(g)
         feeback = []
         sample = g
+        index = 4
         while (sample > 0)
             digit = sample%10
             if @code.any?(digit)
-                if g.to_s.index(digit.to_s) == @code.index(digit)
+                if index == @code.index(digit)
                     feeback.append("*")
                 else
-                feeback.append("1")
+                    feeback.append(1)
                 end
             end
             sample /= 10
+            index -= 1
         end
         return feeback.shuffle.to_s
     end
@@ -72,11 +74,13 @@ end
 
 board = Mastermind.new
 
+
+board.code = [5,3,3,1]
 p board.code
-g = 9999
+g = 3132
 until board.valid_guess?(g) do
     puts "input your guess"
     g = gets.chomp.to_i
 end
 
-# p board.evaluate_guess(g)
+puts board.evaluate_guess(g)
