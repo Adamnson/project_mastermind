@@ -55,11 +55,12 @@ class Mastermind
     def evaluate_guess(g)
         feeback = []
         sample = g
-        index = 4
+        index = 3
         while (sample > 0)
             digit = sample%10
             if @code.any?(digit)
-                if index == @code.index(digit)
+                # p "index is #{index} \n g[index] = #{g[index]} \n @code[index] = #{@code[index]} \n #{digit}"
+                if digit == @code[index]
                     feeback.append("*")
                 else
                     feeback.append(1)
@@ -77,7 +78,8 @@ board = Mastermind.new
 
 board.code = [5,3,3,1]
 p board.code
-g = 3132
+# g = 3132
+g = 5333
 until board.valid_guess?(g) do
     puts "input your guess"
     g = gets.chomp.to_i
